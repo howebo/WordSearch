@@ -1,0 +1,73 @@
+<!-- <h1>Word Searcher</h1>
+<form (submit)="searchWord()">
+  <mat-form-field>
+    <mat-label>Enter a word</mat-label>
+    <input matInput [(ngModel)]="searchTerm" name="word" required />
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Search</button>
+</form>
+
+<div *ngIf="wordData">
+  <h2>Word: {{ wordData.word }}</h2>
+  <p>
+    Phonetic: {{ wordData.phonetic }}
+    <button mat-icon-button *ngIf="wordData" (click)="playAudio()">
+      <mat-icon>volume_up</mat-icon>
+    </button>
+  </p>
+  <h3>Definitions:</h3>
+  <ul>
+    <li *ngFor="let meaning of wordData.meanings">
+      {{ meaning.partOfSpeech }}: {{ meaning.definitions[0].definition }}
+    </li>
+  </ul>
+</div>
+<div *ngIf="error" class="error-message">{{ error }}</div>
+
+<audio
+  *ngIf="wordData"
+  [src]="wordData.phonetics[0].audio"
+  #audioPlayer
+></audio> -->
+
+<div class="container">
+  <h1>Word Searcher</h1>
+  <form (submit)="searchWord()">
+    <mat-form-field>
+      <mat-label>Enter a word</mat-label>
+      <input matInput [(ngModel)]="searchTerm" name="word" required />
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Search</button>
+  </form>
+
+  <div *ngIf="wordData" class="word-details">
+    <h2>Word: {{ wordData.word }}</h2>
+    <p>
+      Phonetic: {{ wordData.phonetic }}
+      <button
+        mat-icon-button
+        class="audio-button"
+        *ngIf="wordData"
+        (click)="playAudio()"
+      >
+        <mat-icon>volume_up</mat-icon>
+      </button>
+      <audio
+        *ngIf="wordData"
+        [src]="
+          wordData?.phonetics[wordData.phonetics.length - 1]?.audio ||
+          wordData?.phonetics[wordData.phonetics.length - 2]?.audio
+        "
+        #audioPlayer
+      ></audio>
+    </p>
+    <h3>Definitions:</h3>
+    <ul>
+      <li *ngFor="let meaning of wordData.meanings">
+        {{ meaning.partOfSpeech }}: {{ meaning.definitions[0].definition }}
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+</div>
